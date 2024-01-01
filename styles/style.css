@@ -1,0 +1,23 @@
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select:focus,
+  textarea:focus,
+  input:focus {
+    font-size: 16px;
+  }
+}
+
+/* YourComponent.css or App.css */
+@keyframes ping-slow {
+  0%{
+    transform: scale(1);
+    opacity: .3;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s infinite; /* Adjust the duration as needed */
+}
