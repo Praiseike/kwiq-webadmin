@@ -12,7 +12,7 @@ import axios from 'axios'
 
 import { activeHomeTabAtom } from '../stores'
 import { useAtom } from 'jotai'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { FaUserSlash } from 'react-icons/fa'
 import { NumericFormat } from 'react-number-format'
 
@@ -34,17 +34,19 @@ const Leaderboard = () => {
   const [activeTab, setActiveTab] = useState<string | null>('gift_card')
 
   const { data, error } = useSWR(`fetch-leaderboard/${type}`, async () => {
-
+    console.log('refetching active tab');
     const res = await axios.get(`/api/fetch-leaderboard/?type=${type}`)
     return res.data.data.data
   })
 
   // console.log(data)
   useEffect(() => {
-    // console.log('leaders', data)
-    // if the length is greater than 3 slice else just set the others
+    // clear data first
+    setTopers([]);
+    setOthers([]);
     if(activeTab !== 'gift_card'){
       // sorting from highest to lowest
+      
       data?.sort(function (a: any, b: any) {
         return b.coin_trade_amount - a.coin_trade_amount;
       })
@@ -68,6 +70,15 @@ const Leaderboard = () => {
       :
       Math.trunc(data?.coin_trade_amount / 1000);
     return amount
+  }
+
+
+  const getCountCondition = (data: any): number => {
+    const count: number = 'gift_card' === activeTab ?
+      Math.trunc(data?.card_trade_count)
+      :
+      Math.trunc(data?.coin_trade_count);
+    return count;
   }
 
   const handleSetTopers = (
@@ -252,12 +263,12 @@ const Leaderboard = () => {
               <div tw="flex flex-col flex-1">
                 <div tw="inline-flex space-x-1 items-baseline">
                   <p tw="font-medium text-sm text-black">
-                    {other?.card_trade_count} -
+                    {getCountCondition(other)} -
                   </p>
                   <NumericFormat
                     tw="font-medium text-sm"
                     thousandsGroupStyle="thousand"
-                    value={Math.trunc(other?.card_trade_amount / 1000)}
+                    value={Math.trunc(getAmountCondition(other))}
                     prefix=""
                     suffix=""
                     decimalSeparator="."
