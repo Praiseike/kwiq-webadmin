@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 import tw from 'twin.macro'
 
-// import axios from 'axios'
-import { axios } from '../libs/axios';
+import axios from 'axios'
+
 import { ActionIcon, Affix, TextInput, Modal, Paper } from '@mantine/core'
 import { useViewportSize, useScrollIntoView } from '@mantine/hooks'
 
@@ -68,19 +68,15 @@ const Chat = (props: IChatProps) => {
   }
 
   const createConversation = async (message: string) => {
-    // if(textInputRef.current){
-    //   textInputRef.current.focus();
-    // }
+    textInputRef?.current?.focus();
+    setMesssage('')
+
     console.log("started send procedure")
     const nMessage = message
     try {
-      const response = await axios.post('/conversation/create', {
+      const response = await axios.post('/api/create-conversation', {
         to: adminId,
         message: nMessage,
-      },{
-        headers:{
-          'x-id-key': props?.token?.xidkey,
-        }
       })
       if (response.status == 200) {
         await mutate()
@@ -91,27 +87,6 @@ const Chat = (props: IChatProps) => {
       unsuccessfullNotification({ message: error?.response.data.data.message })
     }
   }
-
-  // const createConversation = async (message: string) => {
-  //   // if(textInputRef.current){
-  //   //   textInputRef.current.focus();
-  //   // }
-  //   console.log("started send procedure")
-  //   const nMessage = message
-  //   try {
-  //     const response = await axios.post('/api/create-conversation', {
-  //       to: adminId,
-  //       message: nMessage,
-  //     })
-  //     if (response.status == 200) {
-  //       await mutate()
-  //       console.log("ended send procedure");
-  //       setMesssage('')
-  //     }
-  //   } catch (error: any) {
-  //     unsuccessfullNotification({ message: error?.response.data.data.message })
-  //   }
-  // }
 
   const handleImageUpload = async (file: File) => {
     let src = ''

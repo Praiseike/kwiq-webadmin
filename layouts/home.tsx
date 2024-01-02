@@ -85,7 +85,7 @@ const AppTab = ({ children, pageStates }: AppTabProps) => {
               Home
             </Tabs.Tab>
             {
-              pageStates && pageStates?.giftcard_page && 
+             ((pageStates === null || pageStates === undefined) || (pageStates && pageStates?.giftcard_page) )&& 
               <Tabs.Tab value="Cards" icon={<BsCreditCardFill size={24} />}>
                 Cards
               </Tabs.Tab>
