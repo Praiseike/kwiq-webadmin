@@ -23,7 +23,6 @@ import { useMe } from '../hooks/api'
 import { NumericFormat } from 'react-number-format'
 
 import 'animate.css'
-import { getSession, useSession } from 'next-auth/react'
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]'
@@ -420,8 +419,9 @@ const Index = ({pageStates}: {pageStates: any}) => {
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext){
-  const session = await getServerSession(context.req,context.res,authOptions);
 
+  const session = await getServerSession(context.req,context.res,authOptions);
+  
   const pageStates = session?.user?.pageStates;
 
 
@@ -432,6 +432,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
       }
     }
   }
+  
   return {
     props: {
       // pageStates

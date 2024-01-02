@@ -28,11 +28,6 @@ const SignIn = ({}: SignInProps) => {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  const session = useSession();
-  // redirect patch
-  if(session?.status === 'authenticated'){
-    router.push('/')
-  }
 
   const form = useForm({
     initialValues: {
@@ -178,7 +173,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   }
   return {
-    props: { session },
+    props: {},
   }
 }
 export default SignIn

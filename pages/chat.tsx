@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 import tw from 'twin.macro'
 
-import axios from 'axios'
-
+// import axios from 'axios'
+import { axios } from '../libs/axios';
 import { ActionIcon, Affix, TextInput, Modal, Paper } from '@mantine/core'
 import { useViewportSize, useScrollIntoView } from '@mantine/hooks'
 
@@ -24,10 +24,15 @@ import { useSession } from 'next-auth/react'
 import { unsuccessfullNotification } from '../libs/notifications'
 import LoadingScreen from '../components/LoadingScreen'
 import AdminMessages from '../components/chat/AdminMessages'
+import { GetServerSidePropsContext } from 'next'
 
-export interface IChatProps { }
+import { getToken } from 'next-auth/jwt'
+
+export interface IChatProps { token: any }
 
 const Chat = (props: IChatProps) => {
+
+  console.log(props);
   const { height, width } = useViewportSize()
 
   const { scrollIntoView, targetRef, scrollableRef } =
@@ -61,24 +66,52 @@ const Chat = (props: IChatProps) => {
     const fileUploaded = event.target.files[0]
     handleImageUpload(fileUploaded)
   }
+
   const createConversation = async (message: string) => {
-    if(textInputRef.current){
-      textInputRef.current.focus();
-    }
+    // if(textInputRef.current){
+    //   textInputRef.current.focus();
+    // }
+    console.log("started send procedure")
     const nMessage = message
     try {
-      const response = await axios.post('/api/create-conversation', {
+      const response = await axios.post('/conversation/create', {
         to: adminId,
         message: nMessage,
+      },{
+        headers:{
+          'x-id-key': props?.token?.xidkey,
+        }
       })
       if (response.status == 200) {
         await mutate()
+        console.log("ended send procedure");
         setMesssage('')
       }
     } catch (error: any) {
       unsuccessfullNotification({ message: error?.response.data.data.message })
     }
   }
+
+  // const createConversation = async (message: string) => {
+  //   // if(textInputRef.current){
+  //   //   textInputRef.current.focus();
+  //   // }
+  //   console.log("started send procedure")
+  //   const nMessage = message
+  //   try {
+  //     const response = await axios.post('/api/create-conversation', {
+  //       to: adminId,
+  //       message: nMessage,
+  //     })
+  //     if (response.status == 200) {
+  //       await mutate()
+  //       console.log("ended send procedure");
+  //       setMesssage('')
+  //     }
+  //   } catch (error: any) {
+  //     unsuccessfullNotification({ message: error?.response.data.data.message })
+  //   }
+  // }
 
   const handleImageUpload = async (file: File) => {
     let src = ''
@@ -258,6 +291,25 @@ Chat.getLayout = function getLayout(page: ReactElement) {
       <div tw="px-4 py-3 w-full">{page}</div>
     </Layout>
   )
+}
+
+
+export async function getServerSideProps(context: GetServerSidePropsContext){
+  const token = await getToken(context);
+  // const session = await getServerSession(context.req,context.res,authOptions);
+  console.log(token);
+  if(token){
+    return {
+      props:{
+        token,
+      }
+    }
+  }
+  return {
+    props: {
+      // pageStates
+    },
+  };
 }
 
 export default Chat

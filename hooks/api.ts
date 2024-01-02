@@ -1,9 +1,11 @@
 import useSWR from 'swr'
 import axios from 'axios'
-import { signOut } from 'next-auth/react'
+import { getSession, signOut } from 'next-auth/react'
 import useSWRInfinite from 'swr/infinite'
+import { getToken } from 'next-auth/jwt'
 
 export const fetcher = async (url: string) => {
+  const token = getSession();
   const res = await axios
     .get(url)
     .then(res => res.data)
