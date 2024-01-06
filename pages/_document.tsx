@@ -7,7 +7,6 @@ import Document, {
   DocumentInitialProps,
 } from 'next/document'
 import { extractCritical } from '@emotion/server'
-import Script from 'next/script';
 
 type NewDocumentInitialProps = DocumentInitialProps & {
   ids: string[]
@@ -51,6 +50,23 @@ class CustomDocument extends Document<NewDocumentInitialProps> {
             `}} />
           {/* <!-- End Google Tag Manager --> */}
 
+            {/*  Analytics  */}
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=G-2PX5V9PD7C`}
+          />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-2PX5V9PD7C', {
+                  page_path: window.location.pathname,
+                });
+              `,
+            }}/>
 
           <style
             data-emotion-css={this.props?.ids?.join(' ')}
@@ -60,16 +76,6 @@ class CustomDocument extends Document<NewDocumentInitialProps> {
         </Head>
         <body>
           {/* <!-- Google Tag Manager (noscript) --> */}
-            <Script src="https://www.googletagmanager.com/gtag/js?id=G-2PX5V9PD7C" />
-            <Script id="google-analytics">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-      
-                gtag('config', 'G-2PX5V9PD7C');
-              `}
-            </Script>
           <noscript>
             <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6H2RK3Q"
             height="0" width="0" 
