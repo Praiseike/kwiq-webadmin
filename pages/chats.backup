@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 import tw from 'twin.macro'
 
-// import axios from 'axios'
-import { axios } from '../libs/axios';
+import axios from 'axios'
+
 import { ActionIcon, Affix, TextInput, Modal, Paper } from '@mantine/core'
 import { useViewportSize, useScrollIntoView } from '@mantine/hooks'
 
@@ -32,18 +32,14 @@ export interface IChatProps { token: any }
 
 const Chat = (props: IChatProps) => {
 
-  const token = props.token.xidkey;
+  console.log(props);
   const { height, width } = useViewportSize()
 
   const { scrollIntoView, targetRef, scrollableRef } =
     useScrollIntoView<HTMLDivElement>()
 
   const { data: user } = useSession()
-  // const { messages, mutate, isLoading: isLoadingMessages } = useMessages(token);
-  const [ messages, setMessages ] = useState([]);
-  const [ refetch, setRefetch ] = useState(false);
-  const [ isLoadingMessages, setIsLoadingMessages] = useState(true);
-
+  const { messages, mutate, isLoading: isLoadingMessages } = useMessages()
   const { messages: userConvo, isLoading: isLoadingConverstions } =
     useUserConversation()
 
@@ -55,33 +51,12 @@ const Chat = (props: IChatProps) => {
 
   const hiddenFileInput = useRef<HTMLInputElement>(null)
 
-  // if the sender is not admin
+  //if the sender is not admin
   const adminId = '60967ce06c9e1e0015399a1c'
 
   useEffect(() => {
     scrollIntoView()
   }, [messages, scrollIntoView])
-
-
-  useEffect(() => {
-      console.log("fetching messages");
-      axios.get('/conversation/60967ce06c9e1e0015399a1c',{
-      headers:{
-        'x-id-key': token
-      }
-    })
-    .then((response: any) => {
-      console.log("fetched messages");
-      setMessages(response?.data?.data);
-    })
-    .catch(e => {  
-      if (e?.response?.status == 401) {
-        // signOut()
-      }
-      return e?.response?.data
-    });
-
-  },[refetch])
 
   const handleClick = (event: any) => {
     hiddenFileInput?.current?.click()
@@ -98,24 +73,19 @@ const Chat = (props: IChatProps) => {
 
     console.log("started send procedure")
     const nMessage = message
-    axios.post('/conversation/create', {
-      to: adminId,
-      message: nMessage,
-    },{
-      headers: {
-        'x-id-key': token
+    try {
+      const response = await axios.post('/api/create-conversation', {
+        to: adminId,
+        message: nMessage,
+      })
+      if (response.status == 200) {
+        await mutate()
+        console.log("ended send procedure");
+        setMesssage('')
       }
-    })
-      .then(response => {
-        console.log("sent the message");
-        if (response.status === 200 || response.status === 201) {
-          // mutate()
-          setRefetch(!refetch);
-          setMesssage('')
-        }
-    }).catch(error => {
+    } catch (error: any) {
       unsuccessfullNotification({ message: error?.response.data.data.message })
-    });
+    }
   }
 
   const handleImageUpload = async (file: File) => {
@@ -302,7 +272,7 @@ Chat.getLayout = function getLayout(page: ReactElement) {
 export async function getServerSideProps(context: GetServerSidePropsContext){
   const token = await getToken(context);
   // const session = await getServerSession(context.req,context.res,authOptions);
-
+  console.log(token);
   if(token){
     return {
       props:{

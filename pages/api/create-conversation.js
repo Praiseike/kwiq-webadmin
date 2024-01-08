@@ -8,6 +8,7 @@ const BuyDataBundle = async (req, res) => {
   if(token){
     if(req.method == "POST"){
       try {
+
         const response = await axios.post('/conversation/create',
           { ...req.body },
           {
@@ -16,6 +17,7 @@ const BuyDataBundle = async (req, res) => {
             }
           }
         )
+        console.log('console: sent requested conversion',req.body.message)
         res.status(200).json({ data: response?.data })
       } catch (e) {
        // console.log(e.response.data)

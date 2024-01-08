@@ -29,7 +29,6 @@ class CustomDocument extends Document<NewDocumentInitialProps> {
         />
       </>
     )
-
     return initialProps
   }
 
