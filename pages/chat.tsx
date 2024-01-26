@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 import tw from 'twin.macro'
 
-// import axios from 'axios'
-import { axios } from '../libs/axios';
+import axios from 'axios'
+
 import { ActionIcon, Affix, TextInput, Modal, Paper } from '@mantine/core'
 import { useViewportSize, useScrollIntoView } from '@mantine/hooks'
 
@@ -30,20 +30,44 @@ import { getToken } from 'next-auth/jwt'
 
 export interface IChatProps { token: any }
 
+const adminId = '60967ce06c9e1e0015399a1c'
+
+
+
+const constructMessage = (message: string) => {
+  return {
+      _id: `${Math.random()}`,
+      conversation: "658e8e4ea6511e28de199d18",
+      to: adminId,
+      from: "657e0c316943469dd3bc7356",
+      message: message,
+      isRead: true,
+      createdAt: (new Date()).toISOString(),
+      updatedAt: (new Date()).toISOString(),
+      toObj: [
+          {
+              _id: adminId
+          }
+      ],
+      fromObj: [
+          {
+              _id: "657e0c316943469dd3bc7356"
+          }
+      ]
+  }
+}
+
+
+
 const Chat = (props: IChatProps) => {
 
-  const token = props.token.xidkey;
   const { height, width } = useViewportSize()
 
   const { scrollIntoView, targetRef, scrollableRef } =
     useScrollIntoView<HTMLDivElement>()
 
   const { data: user } = useSession()
-  // const { messages, mutate, isLoading: isLoadingMessages } = useMessages(token);
-  const [ messages, setMessages ] = useState([]);
-  const [ refetch, setRefetch ] = useState(false);
-  const [ isLoadingMessages, setIsLoadingMessages] = useState(true);
-
+  const { messages, mutate, isLoading: isLoadingMessages } = useMessages()
   const { messages: userConvo, isLoading: isLoadingConverstions } =
     useUserConversation()
 
@@ -51,37 +75,23 @@ const Chat = (props: IChatProps) => {
   const [modalImage, setModalImage] = useState('')
   const [message, setMesssage] = useState('')
 
+  const [ newMessages, setNewMessages ] = useState(messages);
+
   const textInputRef = useRef<HTMLInputElement>(null)
 
   const hiddenFileInput = useRef<HTMLInputElement>(null)
 
-  // if the sender is not admin
-  const adminId = '60967ce06c9e1e0015399a1c'
+  //if the sender is not admin
 
   useEffect(() => {
     scrollIntoView()
+    setNewMessages(messages);
   }, [messages, scrollIntoView])
 
-
   useEffect(() => {
-      console.log("fetching messages");
-      axios.get('/conversation/60967ce06c9e1e0015399a1c',{
-      headers:{
-        'x-id-key': token
-      }
-    })
-    .then((response: any) => {
-      console.log("fetched messages");
-      setMessages(response?.data?.data);
-    })
-    .catch(e => {  
-      if (e?.response?.status == 401) {
-        // signOut()
-      }
-      return e?.response?.data
-    });
 
-  },[refetch])
+    scrollIntoView();
+  },[newMessages,scrollIntoView()]);
 
   const handleClick = (event: any) => {
     hiddenFileInput?.current?.click()
@@ -93,29 +103,26 @@ const Chat = (props: IChatProps) => {
   }
 
   const createConversation = async (message: string) => {
+
+    const newMessage = constructMessage(message);
+    setNewMessages([...newMessages,newMessage]);
+
     textInputRef?.current?.focus();
     setMesssage('')
 
-    console.log("started send procedure")
     const nMessage = message
-    axios.post('/conversation/create', {
-      to: adminId,
-      message: nMessage,
-    },{
-      headers: {
-        'x-id-key': token
+    try {
+      const response = await axios.post('/api/create-conversation', {
+        to: adminId,
+        message: nMessage,
+      })
+      if (response.status == 200) {
+        await mutate()
+        setMesssage('')
       }
-    })
-      .then(response => {
-        console.log("sent the message");
-        if (response.status === 200 || response.status === 201) {
-          // mutate()
-          setRefetch(!refetch);
-          setMesssage('')
-        }
-    }).catch(error => {
+    } catch (error: any) {
       unsuccessfullNotification({ message: error?.response.data.data.message })
-    });
+    }
   }
 
   const handleImageUpload = async (file: File) => {
@@ -171,8 +178,8 @@ const Chat = (props: IChatProps) => {
           </div>
         ) : (
           <div tw="flex flex-col space-y-4 pb-3">
-            {messages &&
-              messages.map(
+            {newMessages &&
+              newMessages.map(
                 (message: {
                   from: string
                   _id: string
@@ -302,7 +309,6 @@ Chat.getLayout = function getLayout(page: ReactElement) {
 export async function getServerSideProps(context: GetServerSidePropsContext){
   const token = await getToken(context);
   // const session = await getServerSession(context.req,context.res,authOptions);
-
   if(token){
     return {
       props:{

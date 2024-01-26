@@ -1,10 +1,7 @@
 import useSWR from 'swr'
 import axios from 'axios'
-import { axios as ax } from '../libs/axios';
 import { getSession, signOut } from 'next-auth/react'
 import useSWRInfinite from 'swr/infinite'
-import { getToken } from 'next-auth/jwt'
-import { FaQq } from 'react-icons/fa';
 
 export const fetcher = async (url: string) => {
   const token = getSession();
@@ -152,39 +149,8 @@ export function useTransactions() {
     setSize,
   }
 }
-const newFetcher = async (url: string,token: string) => {
 
-  try{
-    const response = await ax.get(url,{
-      headers: {
-        'x-id-key': token
-      }
-    });
-
-    if(response.status >= 200 || response.status === 201){
-      return { data: response.data }
-    }
-  }catch(error){
-    console.log(error);
-  }
-}
-
-export function useMessages(token: string) {
-  const { data, error, mutate } = useSWR(
-    '/conversation/60967ce06c9e1e0015399a1c',
-      (url: string) => newFetcher(url,token),{
-        refreshInterval: 200,
-      }
-  )
-  return {
-    messages: data?.data?.data,
-    isLoading: !error && !data,
-    isError: error,
-    mutate,
-  }
-}
-
-export function useMessagesOld() {
+export function useMessages() {
   const { data, error, mutate } = useSWR(
     'api/get-single-conversation/?id=60967ce06c9e1e0015399a1c',
     fetcher,
@@ -199,7 +165,9 @@ export function useMessagesOld() {
 
 
 export function useUserConversation() {
-  const { data, error, mutate } = useSWR('api/get-user-conversations/', fetcher)
+  const { data, error, mutate } = useSWR('api/get-user-conversations/', fetcher,{
+    refreshInterval: 200
+  })
   return {
     messages: data?.data?.data,
     isLoading: !error && !data,
