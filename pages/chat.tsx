@@ -103,9 +103,9 @@ const Chat = (props: IChatProps) => {
   }
 
   const createConversation = async (message: string) => {
-
     const newMessage = constructMessage(message);
     setNewMessages([...newMessages,newMessage]);
+    setMesssage('')
 
     textInputRef?.current?.focus();
     setMesssage('')
@@ -118,10 +118,9 @@ const Chat = (props: IChatProps) => {
       })
       if (response.status == 200) {
         await mutate()
-        setMesssage('')
       }
     } catch (error: any) {
-      unsuccessfullNotification({ message: error?.response.data.data.message })
+      unsuccessfullNotification({ message: error?.response?.data?.data?.message })
     }
   }
 
