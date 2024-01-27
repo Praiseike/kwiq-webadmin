@@ -36,9 +36,9 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
   }, [])
 
   const handleClick = (e: MouseEvent, type?: string) => {
-    e.preventDefault();
-    setType('');
-    setIsVisible(true);
+    // e.preventDefault();
+    // setType('');
+    // setIsVisible(true);
   }
 
   return (
@@ -153,19 +153,19 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
           </div>
 
           <div tw="relative bg-[#e3e5e4] rounded-lg">
-            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/xrp?q=xrp">
+            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/dai?q=cor/dai">
               {/* <Link passHref href="sell-crypto/xrp?q=xrp"> */}
               <div tw="flex flex-row space-x-2 items-center py-7 px-3 cursor-pointer">
                 <Image
-                  src="/img/coins/xrpicon.png"
+                  src="/img/coins/Dai.png"
                   height={32}
                   width={32}
                   alt="xrp icon"
                 />
 
                 <div tw="block">
-                  <p tw="text-black1 font-medium">XRP</p>
-                  <p tw="text-black2 [font-size:10px]">Ripple Wallet</p>
+                  <p tw="text-black1 font-medium">DAI</p>
+                  <p tw="text-black2 [font-size:10px]">ERC-20 Wallet</p>
                 </div>
               </div>
             </Link>
@@ -176,17 +176,17 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
           </div>
 
           <div tw="relative bg-[#e3eff8] rounded-lg">
-            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/dash?q=dash">
+            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/ada?q=cor/ada">
               <div tw="flex flex-row space-x-2 items-center py-7 px-3 cursor-pointer">
                 <Image
-                  src="/img/coins/dashicon.png"
+                  src="/img/coins/cardano.png"
                   height={32}
                   width={32}
                   alt="dash icon"
                 />
                 <div tw="block">
-                  <p tw="text-black1 font-medium">DASH</p>
-                  <p tw="text-black2 [font-size:10px]">Dash Wallet</p>
+                  <p tw="text-black1 font-medium">ADA</p>
+                  <p tw="text-black2 [font-size:10px]">Cardano Wallet</p>
                 </div>
               </div>
             </Link>
@@ -257,17 +257,17 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
           </div>
 
           <div tw="relative bg-[#e4f2f2] rounded-lg">
-            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/sol?q=sol">
+            <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/usdt?q=cor/usdte">
               <div tw="flex flex-row space-x-2 items-center py-7 px-3 cursor-pointer">
                 <Image
-                  src="/img/coins/solanaicon.png"
+                  src="/img/coins/usdticon.png"
                   height={34}
                   width={34}
-                  alt="eth icon"
+                  alt="usdt icon"
                 />
                 <div tw="block">
-                  <p tw="text-black1 font-medium">SOL</p>
-                  <p tw="text-black2 [font-size:10px]">Solana Wallet</p>
+                  <p tw="text-black1 font-medium">USDT</p>
+                  <p tw="text-black2 [font-size:10px]">ERC-20 Wallet</p>
                 </div>
               </div>
             </Link>

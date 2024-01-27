@@ -257,6 +257,7 @@ const Cards = ({ card }: ICardsProps) => {
     }
     return true
   }
+
   const SubmitForm = async () => {
     if (confirm) {
       setLoading(true)
@@ -435,6 +436,42 @@ const Cards = ({ card }: ICardsProps) => {
           )}
         </div>
 
+            
+        <div tw="px-4 mb-4">
+          <p tw="w-full text-black2 text-sm mt-5">Trade terms</p>
+          {true && (
+            // <Textarea
+            //   value={terms}
+            //   autosize
+            //   contentEditable={false}
+            //   minRows={2}
+            //   // maxRows={4}              
+            //   styles={{
+            //     input: style.input.base,
+            //     error: style.input.error,
+            //   }}
+            // />
+
+            <div style={{backgroundColor: '#f8f8f8'}} tw="p-3 rounded">
+              { !subCategory ? "Select sub category to see terms": terms }
+            </div>
+          )}
+          {terms == 'no terms' && (
+            <TextInput
+              tw="mt-3 w-full"
+              required
+              placeholder="No trade terms for this card"
+              size="xl"
+              styles={{
+                input: style.input.base,
+                error: style.input.error,
+              }}
+            />
+          )}
+
+        </div>
+
+
         <div tw="px-4  w-full mt-3">
           <TextInput
             required
@@ -496,33 +533,6 @@ const Cards = ({ card }: ICardsProps) => {
         </div>
 
         <div tw="px-4 py-5 w-full">
-          <p tw="w-full text-black2 text-sm mt-5">Trade terms</p>
-          {terms && (
-            <Textarea
-              value={terms}
-              autosize
-              contentEditable={false}
-              minRows={2}
-              maxRows={4}
-              styles={{
-                input: style.input.base,
-                error: style.input.error,
-              }}
-            />
-          )}
-          {terms == 'no terms' && (
-            <TextInput
-              tw="mt-3 w-full"
-              required
-              placeholder="No trade terms for this card"
-              size="xl"
-              styles={{
-                input: style.input.base,
-                error: style.input.error,
-              }}
-            />
-          )}
-
           <div tw="w-full block">
             <div tw="inline-flex items-center w-full  mt-5">
               <label
@@ -573,7 +583,6 @@ const Cards = ({ card }: ICardsProps) => {
             </span>
           </div>
           <div tw="block w-full">
-            {/* <p tw="w-full text-black2 text-sm mt-5">Comment</p> */}
             <Textarea
               label=""
               placeholder="Leave comment here"

@@ -157,6 +157,18 @@ const Faq = (props: FaqProps) => {
             </Accordion.Panel>
           </Accordion.Item>
 
+          <Accordion.Item value="crypto-trade-pending">
+            <Accordion.Control>
+              Why is my crypto trade still pending?
+            </Accordion.Control>
+            <Accordion.Panel>
+              Your Crypto trade is completed once it reaches the required
+              number of confirmations on the blockchain. Endeavour to send your coins using priority fees
+              for faster confirmation. We have no control over the confirmation time.
+            </Accordion.Panel>
+          </Accordion.Item>
+
+
           <Accordion.Item value="store-crypto">
             <Accordion.Control>
               Can I store crypto in my KWIQ wallet?

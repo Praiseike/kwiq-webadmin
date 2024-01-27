@@ -92,6 +92,25 @@ const Transaction = (props: ITransactionProps) => {
               />
             </p>
           </div>
+          <div tw="flex justify-between items-baseline py-1">
+            <p css={Style.text.sm} tw="text-black2">
+              Fee
+            </p>
+            <p css={Style.text.md} tw="font-medium">
+              <NumericFormat
+                css={[Style.text.md]}
+                thousandsGroupStyle="thousand"
+                value={40}
+                prefix="₦"
+                suffix=".00"
+                decimalSeparator="."
+                displayType="text"
+                type="text"
+                thousandSeparator={true}
+                allowNegative={true}
+              />
+            </p>
+          </div>
         </div>
       </div>
 
@@ -114,11 +133,9 @@ const Transaction = (props: ITransactionProps) => {
           <div tw="grid grid-cols-2 gap-2">
             {props?.images.map((item: any, index: number) => (
               <div key={index} tw="relative cursor-pointer">
-                {/* leftSection */}
                 <div tw=" items-center">
                   <Image src={item} width="155" height="99" alt="" />
                 </div>
-                {/*  <p tw="absolute top-0 left-0">nbvhvghgv</p> */}
               </div>
             ))}
           </div>

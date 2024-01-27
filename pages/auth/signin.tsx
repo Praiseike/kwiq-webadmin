@@ -10,6 +10,8 @@ import style from '../../styles/Styles'
 import { useForm } from '@mantine/form'
 import { TextInput, Button, Text, PasswordInput } from '@mantine/core'
 
+import userT from '../../public/lottie/userT.json';
+
 import {
   successNotification,
   unsuccessfullNotification,
@@ -21,6 +23,7 @@ import { Alert } from '@mantine/core'
 
 import { getSession, signIn, useSession } from 'next-auth/react'
 import { MdError } from 'react-icons/md'
+import LottieWrapper from '../../components/LottieAnimation'
 interface SignInProps {}
 
 const SignIn = ({}: SignInProps) => {
@@ -65,14 +68,18 @@ const SignIn = ({}: SignInProps) => {
   return (
     <>
       <div tw="flex flex-col w-full px-4 py-5 justify-center mt-5">
-        <Image
+        {/* <Image
           alt="sign in icon"
           src="/img/singinicon.svg"
           width={206}
           height={203}
           tw="mx-auto"
+        /> */}
+        <LottieWrapper
+          width={206}
+          height={203}
+          animationData={userT}
         />
-
         <div tw="mt-8">
           <Text css={[style.text.md]} tw="w-full font-normal">
             Sign In

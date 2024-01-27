@@ -38,7 +38,7 @@ const Support = (props: ISupportProps) => {
         </div>
       </Link>
 
-      <a href="mailto:help@kingcards.ng">
+      <a href="mailto:help@kwiq.app">
         <div tw="w-full space-x-2 flex items-center rounded-xl bg-black6 px-3 py-3 mt-3">
           <Image
             src="/img/gmail.png"
@@ -94,7 +94,7 @@ const Support = (props: ISupportProps) => {
       <a
         rel="noreferrer"
         target="_blank"
-        href="https://www.instagram.com/kingcards.ng/"
+        href="https://www.instagram.com/kwiq.app/"
       >
         <div tw="w-full space-x-2 flex items-center rounded-xl bg-black6 px-3 py-3 mt-3">
           <Image

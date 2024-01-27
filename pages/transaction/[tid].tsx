@@ -15,6 +15,8 @@ import Back from '../../layouts/back'
 import { ReactElement, useState } from 'react'
 import AppTab from '../../layouts/home'
 import { Input, Modal, Textarea } from '@mantine/core'
+import LottieWrapper from '../../components/LottieAnimation'
+import trxLottie from '../../public/lottie/trx.json';
 
 export interface ITransactionProps {
   amount: number
@@ -47,23 +49,27 @@ const Transaction = () => {
   if (isLoading) {
     return <LoadingScreen />
   }
-
+  console.log(transaction);
   return (
     <>
       <Modal opened={opened} onClose={() => setOpened(false)} centered>
         <Image src={modalImage} height="500" width="500" alt="trade image" />
       </Modal>
 
-      <div tw="w-full flex items-center justify-between mt-2 mb-4">
-        <p tw="text-black1 text-lg font-normal">Transaction Details</p>
+      <div tw="w-full flex items-center justify-between mt-5 mb-4">
+        <p tw="text-black1 text-lg mx-auto font-normal">Transaction Details</p>
       </div>
       <div tw="flex flex-col justify-center mx-auto min-w-0 mt-3 px-5 pt-5 pb-3 bg-black6 rounded-lg">
-        <Image
+        {/* <Image
           tw="mx-auto"
           src="/img/transactionicon.svg"
           width={108}
           height={112}
           alt="transaction icon"
+        /> */}
+
+        <LottieWrapper
+          animationData={trxLottie}
         />
 
         <div tw=" flex justify-center mt-5">
@@ -139,7 +145,26 @@ const Transaction = () => {
               allowNegative={true}
             />
           </div>
-
+          { transaction?.narration.toLowerCase().includes('withdraw') &&
+          
+            <div tw="flex justify-between items-baseline py-2">
+              <p css={Style.text.sm} tw="text-black2">
+                Fee:
+              </p>
+              <NumericFormat
+                css={[Style.text.smbold]}
+                thousandsGroupStyle="thousand"
+                value={transaction?.fee ?? 40}
+                prefix="₦"
+                suffix=""
+                decimalSeparator="."
+                displayType="text"
+                type="text"
+                thousandSeparator={true}
+                allowNegative={true}
+              />
+            </div>
+          }
           {transaction?.accountName && (
             <div tw="flex justify-between items-baseline py-2">
               <p css={Style.text.sm} tw="text-black2">
@@ -194,7 +219,7 @@ const Transaction = () => {
         </div>
       </div>
 
-      <Input.Wrapper size="md" label="Comments" tw="my-2">
+      {/* <Input.Wrapper size="md" label="Comments" tw="my-2">
         <Textarea
           value={
             transaction?.comments?.trim().length > 0
@@ -210,16 +235,15 @@ const Transaction = () => {
             error: Style.input.error,
           }}
         />
-      </Input.Wrapper>
+      </Input.Wrapper> */}
 
-      {transaction?.images.length > 0 ? (
+      {/* {transaction?.images.length > 0 ? (
         <>
           <p tw="w-full text-black2 text-sm mt-3 mb-2">Attachment</p>
 
           <div tw="grid grid-cols-2 gap-2">
             {transaction?.images.map((item: any, index: number) => (
               <div key={index} tw="relative cursor-pointer">
-                {/* leftSection */}
                 <div tw=" items-center">
                   <Image
                     src={item}
@@ -231,14 +255,13 @@ const Transaction = () => {
                     }}
                   />
                 </div>
-                {/*  <p tw="absolute top-0 left-0">nbvhvghgv</p> */}
               </div>
             ))}
           </div>
         </>
       ) : (
         <p tw="w-full text-black2 text-sm mt-5">No attachment</p>
-      )}
+      )} */}
     </>
   )
 }

@@ -25,7 +25,7 @@ import QRCode from 'react-qr-code'
 import useSWR, { mutate } from 'swr'
 import { useMe } from '../../hooks/api'
 
-import { AiFillBank, AiOutlineWarning } from 'react-icons/ai'
+import { AiFillBank } from 'react-icons/ai'
 import { IoMdAlert } from 'react-icons/io'
 import { exportAsImage } from '../../utils'
 
@@ -215,15 +215,17 @@ const Wallet = ({ }: IWalletProps) => {
               )}
             </div>
             <p tw="text-sm text-black1 font-semibold  mt-2">Wallet Address</p>
-            <p tw="text-sm text-black1 mt-2">{address}</p>
+            <p tw="text-sm text-black1 mt-2">{(address && address.length > 40)? address.slice(0,40) + '...' : address }</p>
             <div tw="my-4">
-              <button onClick={regenerateAddress} tw="text-primary">
+
+              {/* Disabled Regenerate Address button  */}
+              {/* <button onClick={regenerateAddress} tw="text-primary">
                 {regenLoading ?
                   <PulseLoader size={3} />
                   :
                   'Regenerate'
                 }
-              </button>
+              </button> */}
             </div>
           </div>
         </Group>
@@ -245,12 +247,12 @@ const Wallet = ({ }: IWalletProps) => {
                 This is your personal{' '}
                 <span tw="font-medium">{generateCoinName(wid)}</span> wallet.
               </p>
-              <p tw="text-sm text-red-600 font-[500]">
+              {/* <p tw="text-sm text-red-600 font-[500]">
 
                 <AiOutlineWarning style={{ display: "inline", marginTop: '-4px' }} />
                 This wallet changes automatically every month and the old one will
                 expire. You can Regenerate a new address everytime you want to trade.
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -289,7 +291,11 @@ const Wallet = ({ }: IWalletProps) => {
             <p tw="text-sm text-black1">
               {' '}
               Only send <span tw="font-medium">{generateCoinName(wid)}</span> to
-              this wallet address.
+              this wallet address.<br/>
+              { (wid == 'eth' || wid == 'btc') &&
+
+                <span tw="text-red-600">min deposit: { wid == 'eth'? 0.01 : 0.0005}</span>
+              }
             </p>
           </div>
         </div>
