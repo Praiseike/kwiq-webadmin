@@ -166,11 +166,11 @@ const Transaction = () => {
             </div>
           }
           {transaction?.accountName && (
-            <div tw="flex justify-between items-baseline py-2">
-              <p css={Style.text.sm} tw="text-black2">
+            <div tw="flex justify-between items-baseline px-0 py-2">
+              <p css={Style.text.sm} tw="text-black2 whitespace-nowrap">
                 Account Name:
               </p>
-              <p css={Style.text.sm} tw="font-medium capitalize">
+              <p css={Style.text.sm} tw="font-medium capitalize text-end w-1/2">
                 {(transaction?.accountName + '').toLocaleLowerCase()}
               </p>
             </div>
@@ -189,10 +189,10 @@ const Transaction = () => {
 
           {transaction?.bank && (
             <div tw="flex justify-between items-baseline py-2">
-              <p css={Style.text.sm} tw="text-black2">
+              <p css={Style.text.sm} tw="text-black2 whitespace-nowrap">
                 Bank:
               </p>
-              <p css={Style.text.sm} tw="font-medium capitalize">
+              <p css={Style.text.sm} tw="font-medium  w-1/2 text-end capitalize">
                 {transaction?.bank}
               </p>
             </div>

@@ -22,13 +22,22 @@ dayjs.extend(relativeTime)
 import { useAtom } from 'jotai'
 import { activeHomeTabAtom } from '../../stores'
 import AlertPopup from '../../components/AlertPopup';
+import { getToken } from 'next-auth/jwt'
+import { GetServerSidePropsContext } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
+import { getSession, useSession } from 'next-auth/react'
 
-export interface ISellCryptoProps { }
+export interface ISellCryptoProps {
+  pageStates: any
+}
 
-const SellCrypto = ({ }: ISellCryptoProps) => {
+const SellCrypto = ({ pageStates }: ISellCryptoProps) => {
   const [, setActiveTab] = useAtom(activeHomeTabAtom)
   const [isVisible, setIsVisible] = useState(false);
   const [type, setType] = useState('');
+
+  // localStorage.setItem('pageStates',JSON.stringify(pageStates));
 
   useEffect(() => {
     setActiveTab('Wallet')
@@ -152,7 +161,7 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
             </div>
           </div>
 
-          <div tw="relative bg-[#e3e5e4] rounded-lg">
+          <div tw="relative bg-[#faf1e4] rounded-lg">
             <Link onClick={(e: MouseEvent) => handleClick(e, '')} passHref href="sell-crypto/dai?q=cor/dai">
               {/* <Link passHref href="sell-crypto/xrp?q=xrp"> */}
               <div tw="flex flex-row space-x-2 items-center py-7 px-3 cursor-pointer">
@@ -207,7 +216,7 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
                 />
                 <div tw="block">
                   <p tw="text-black1 font-medium">BCH</p>
-                  <p tw="text-black2 [font-size:10px]">Bitcoin Cash Wallet</p>
+                  <p tw="text-black2 [font-size:10px]">Bitcoin Cash</p>
                 </div>
               </div>
             </Link>
@@ -300,8 +309,59 @@ const SellCrypto = ({ }: ISellCryptoProps) => {
     </>
   )
 }
+
+
+
+// export async function getServerSideProps(context: GetServerSidePropsContext){
+
+//   const session = await getServerSession(context.req,context.res,authOptions);
+  
+//   const pageStates = session?.user?.pageStates;
+
+
+//   if(pageStates){
+//     return {
+//       props:{
+//         pageStates
+//       }
+//     }
+//   }
+  
+//   return {
+//     props: {
+//       // pageStates
+//     },
+//   };
+// }
+
+
+
 SellCrypto.auth = true
+
+SellCrypto.getInitialProps = async function(context: any ) {
+  const session = await getSession(context);
+
+    const pageStates = session?.user?.pageStates;
+
+
+  if(pageStates){
+    return {
+      props:{
+        pageStates
+      }
+    }
+  }
+  return {
+    session,
+  };
+}
+
 SellCrypto.getLayout = function getLayout(page: ReactElement) {
+
+  // const { _owner } = page;
+  // console.log(_owner)
+  // console.log(_owner?.memoizedProps?.props?.pageProps?.pageStates ?? null);
+
   return (
     <Layout>
       <Back

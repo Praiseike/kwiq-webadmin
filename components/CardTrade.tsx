@@ -190,34 +190,34 @@ const Cards = ({ card }: ICardsProps) => {
       }
     }
 
-    if (files == null) {
-      showNotification({
-        disallowClose: true,
-        title: 'Notice!',
-        message: `Select image(s) to upload`,
-        autoClose: 3000,
-        color: 'red',
-        radius: 'md',
-        style: tw`backdrop-blur-sm bg-[#fff3cd]`,
-        styles: {
-          root: {
-            '::before': {
-              backgroundColor: 'transparent',
-            },
-          },
-          description: {
-            color: 'black',
-          },
-          title: {
-            fontWeight: 'bold',
-          },
-        },
-      })
-      return
-    }
+    // if (files == null) {
+    //   showNotification({
+    //     disallowClose: true,
+    //     title: 'Notice!',
+    //     message: `Select image(s) to upload`,
+    //     autoClose: 3000,
+    //     color: 'red',
+    //     radius: 'md',
+    //     style: tw`backdrop-blur-sm bg-[#fff3cd]`,
+    //     styles: {
+    //       root: {
+    //         '::before': {
+    //           backgroundColor: 'transparent',
+    //         },
+    //       },
+    //       description: {
+    //         color: 'black',
+    //       },
+    //       title: {
+    //         fontWeight: 'bold',
+    //       },
+    //     },
+    //   })
+    //   return
+    // }
     setLoading(true)
-    const srcs = await handleImageUpload(files)
-    setImageSrcs(srcs)
+    // const srcs = await handleImageUpload(files)
+    // setImageSrcs(srcs)
     setLoading(false)
     setConfirm(true)
   }
@@ -532,7 +532,8 @@ const Cards = ({ card }: ICardsProps) => {
           </div>
         </div>
 
-        <div tw="px-4 py-5 w-full">
+         <div tw="px-4 py-5 w-full">
+        {/*
           <div tw="w-full block">
             <div tw="inline-flex items-center w-full  mt-5">
               <label
@@ -597,7 +598,7 @@ const Cards = ({ card }: ICardsProps) => {
               }}
             />
           </div>
-
+*/}
           <div tw="w-full mt-10">
             <Button
               loading={loading}
@@ -609,7 +610,7 @@ const Cards = ({ card }: ICardsProps) => {
               Submit for trade
             </Button>
           </div>
-        </div>
+        </div> 
       </form>
 
       <style jsx>{`

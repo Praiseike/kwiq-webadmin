@@ -45,6 +45,7 @@ const allBills = [
 const Index = ({pageStates}: {pageStates: any}) => {
   const router = useRouter()
   const [, setActiveTab] = useAtom(activeHomeTabAtom)
+  localStorage.setItem('pageStates',JSON.stringify(pageStates));
 
   useEffect(() => {
     setActiveTab('Home')
