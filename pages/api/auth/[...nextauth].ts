@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
 
         let query = "";
 
-        if(deviceInfo.isMobile){
+        if(deviceInfo.isMobile || deviceInfo.deviceType == 'mobile'){
           const model = deviceInfo.model;
           const device = deviceInfo.os;
           const brand = deviceInfo.vendor;
