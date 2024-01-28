@@ -286,6 +286,10 @@ const Cards = ({ card }: ICardsProps) => {
             setTimeout(() => {
               setSuccess(true)
             }, 3000) */
+
+            router.push('/chat');
+            
+
             setSuccess(true)
           }
         }
@@ -389,12 +393,12 @@ const Cards = ({ card }: ICardsProps) => {
         </Button>
       </Drawer>
 
-      {success && (
+      {/* {success && (
         <SuccessMessage
           redirectTo="/transactions"
           title="Gift card(s) uploaded succesfully"
         />
-      )}
+      )} */}
 
       <div tw="px-4 w-full" ref={distractionRef}>
         <Group tw="flex-col gap-0" position="center">

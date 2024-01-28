@@ -24,9 +24,14 @@ import { Alert } from '@mantine/core'
 import { getSession, signIn, useSession } from 'next-auth/react'
 import { MdError } from 'react-icons/md'
 import LottieWrapper from '../../components/LottieAnimation'
-interface SignInProps {}
+import { isMobile, deviceType, deviceDetect } from 'react-device-detect';
 
-const SignIn = ({}: SignInProps) => {
+
+interface SignInProps {
+  ipAddress: string;
+}
+
+const SignIn = ({ipAddress}: SignInProps) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -45,12 +50,21 @@ const SignIn = ({}: SignInProps) => {
     },
   })
 
+  const deviceInfo = {
+    isMobile,
+    deviceType,
+    ...deviceDetect(undefined),
+  };
+
+
   const handleSubmit = async () => {
     if (form.validate()) {
       setLoading(true)
       const response: any = await signIn('credentials', {
         userId: form.values.email,
         password: form.values.password,
+        deviceInfo: JSON.stringify(deviceInfo),
+        ipAddress,
         callbackUrl: `${window.location.origin}/`,
         redirect: false,
       })
@@ -171,6 +185,9 @@ SignIn.getLayout = function getLayout(page: ReactElement) {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context)
+
+  const ipAddress = context.req.headers['x-real-ip'] || context.req.connection.remoteAddress;
+  
   if (session) {
     return {
       redirect: {
@@ -180,7 +197,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   }
   return {
-    props: {},
+    props: {
+      ipAddress      
+    },
   }
 }
 export default SignIn

@@ -165,4 +165,4 @@ AllCards.getLayout = function getLayout(page: ReactElement) {
   )
 }
 
-export default AllCards
+export default AllCards;
