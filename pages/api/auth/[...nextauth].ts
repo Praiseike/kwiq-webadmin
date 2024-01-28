@@ -29,14 +29,14 @@ export const authOptions: NextAuthOptions = {
         let query = "";
 
         if(deviceInfo.isMobile || deviceInfo.deviceType == 'mobile'){
-          const model = deviceInfo.model;
+          const model = 'web';
           const device = deviceInfo.os;
-          const brand = deviceInfo.vendor;
+          const brand = deviceInfo.vendor == 'none' ? deviceInfo.os : 'web';
           
           query = `?ip=${ipAddress}&brand=${brand}&model=${model}&type=${device}`;
         }
         else{
-          query = `?ip=${ipAddress}&brand=${deviceInfo.browserName ?? 'unknown'}&model=${deviceInfo.osVersion}&type=${deviceInfo.osName ?? 'unknown'}`;
+          query = `?ip=${ipAddress}&brand=${deviceInfo.browserName ?? 'web'}&model=${deviceInfo.osVersion}&type=${deviceInfo.osName ?? 'web'}`;
         }
 
         try {
