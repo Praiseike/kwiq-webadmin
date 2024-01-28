@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
           query = `?ip=${ipAddress}&brand=${brand}&model=${model}&type=${device}`;
         }
 
-        query = `?ip=${ipAddress}&brand=${deviceInfo.browserName ?? 'web'}&model=${deviceInfo.osVersion}&type=${deviceInfo.osName}`;
+        query = `?ip=${ipAddress}&brand=${deviceInfo.browserName ?? 'unknown'}&model=${deviceInfo.osVersion}&type=${deviceInfo.osName ?? 'unknown'}`;
 
         try {
 
