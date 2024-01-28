@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
         if(deviceInfo.isMobile || deviceInfo.deviceType == 'mobile'){
           const model = 'web';
           const device = deviceInfo.os;
-          const brand = deviceInfo.vendor == 'none' ? deviceInfo.os : 'web';
+          const brand = deviceInfo.vendor !== 'none' ? deviceInfo.vendor : 'web browser';
           
           query = `?ip=${ipAddress}&brand=${brand}&model=${model}&type=${device}`;
         }
