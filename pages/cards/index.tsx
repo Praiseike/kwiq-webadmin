@@ -22,6 +22,7 @@ import { activeHomeTabAtom } from '../../stores'
 import LoadingScreen from '../../components/LoadingScreen'
 
 import CardTrade from '../../components/CardTrade'
+import { useSession } from 'next-auth/react'
 
 export interface IAllCardsProps { }
 
@@ -37,11 +38,19 @@ const AllCards = ({ }: IAllCardsProps) => {
   const [card, setCard] = useState([])
   const [showCardTrade, setShowCardTrade] = useState(false)
 
+  const [ pageStates, setPageStates ] = useState<any>(null);
+  const session = useSession();
   useEffect(() => {
     setCards(allCards)
     //console.log(allCards[0].category)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
+
+  useEffect(() => {
+    if(session && session.data){
+      setPageStates(session.data.user.pageStates);
+    }
+  },[session]);
 
   const [search, setSearch] = useState('')
 
@@ -70,6 +79,21 @@ const AllCards = ({ }: IAllCardsProps) => {
   } else
     return (
       <>
+        <Back
+          rightDiv={ pageStates ? (
+            pageStates.leaderboard_page &&
+            <Link href="/leaderboard" passHref>
+              <Button tw="bg-primary text-sm" size="md">
+                Leaderboard
+              </Button>
+            </Link>
+
+          )
+            : <></>
+        }
+        />
+        <AppTab />
+        
         <Drawer
           opened={showCardTrade}
           onClose={() => setShowCardTrade(false)}
@@ -125,23 +149,17 @@ const AllCards = ({ }: IAllCardsProps) => {
             ))}
           </div>
         </div>
+
+
       </>
     )
 }
 
+
+
 AllCards.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
-      <Back
-        rightDiv={
-          <Link href="/leaderboard" passHref>
-            <Button tw="bg-primary" size="md">
-              Leaderboard
-            </Button>
-          </Link>
-        }
-      />
-      <AppTab />
       {page}
     </Layout>
   )

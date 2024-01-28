@@ -27,11 +27,11 @@ const Leaderboard = () => {
     axios.get('api/get-token').then(res => console.log(res.data))
   }, [])
  */
-  const [type, setType] = useState<string | TabsValue>('gift_card')
+  const [type, setType] = useState<string | TabsValue>('coin')
   const [others, setOthers] = useState<any>([])
   const [topers, setTopers] = useState<any>([])
 
-  const [activeTab, setActiveTab] = useState<string | null>('gift_card')
+  const [activeTab, setActiveTab] = useState<string | null>('coin')
 
   const { data, error } = useSWR(`fetch-leaderboard/${type}`, async () => {
     console.log('refetching active tab');
@@ -221,8 +221,8 @@ const Leaderboard = () => {
           }}
         >
           <Tabs.List grow>
-            <Tabs.Tab value="gift_card">Giftcards</Tabs.Tab>
             <Tabs.Tab value="coin">Crypto</Tabs.Tab>
+            <Tabs.Tab value="gift_card">Giftcards</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="gift_card">
