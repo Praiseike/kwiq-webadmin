@@ -224,7 +224,7 @@ const Chat = (props: IChatProps) => {
                         ]}
                         tw="text-xs py-1 text-black3"
                       >
-                        {dayjs(message?.createdAt).format('MMM DD, YYYY h:m A')}
+                        {dayjs(message?.createdAt).format('MMM DD, YYYY h:mm A')}
                       </span>
                     </div>
                   )
