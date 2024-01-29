@@ -443,23 +443,24 @@ const Cards = ({ card }: ICardsProps) => {
             
         <div tw="px-4 mb-4">
           <p tw="w-full text-black2 text-sm mt-5">Trade terms</p>
-          {true && (
-            // <Textarea
-            //   value={terms}
-            //   autosize
-            //   contentEditable={false}
-            //   minRows={2}
-            //   // maxRows={4}              
-            //   styles={{
-            //     input: style.input.base,
-            //     error: style.input.error,
-            //   }}
-            // />
-
+          {subCategory ?  
+            <Textarea
+              value={ terms }
+              autosize
+              tw="pointer-events-none"
+              contentEditable={false}
+              minRows={2}
+              // maxRows={4}              
+              styles={{
+                input: style.input.base,
+                error: style.input.error,
+              }}
+            />
+            :
             <div style={{backgroundColor: '#f8f8f8'}} tw="p-3 rounded">
-              { !subCategory ? "Select sub category to see terms": terms }
+                {"Select sub category to see terms"}
             </div>
-          )}
+          }
           {terms == 'no terms' && (
             <TextInput
               tw="mt-3 w-full"
@@ -478,6 +479,7 @@ const Cards = ({ card }: ICardsProps) => {
 
         <div tw="px-4  w-full mt-3">
           <TextInput
+            inputMode='numeric'
             required
             placeholder="Gift card amount"
             rightSection={'Amount (USD)'}
@@ -611,7 +613,7 @@ const Cards = ({ card }: ICardsProps) => {
               fullWidth
               type="submit"
             >
-              Submit for trade
+              Start Trade
             </Button>
           </div>
         </div> 

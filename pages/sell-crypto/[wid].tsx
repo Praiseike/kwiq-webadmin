@@ -93,8 +93,9 @@ const Wallet = ({ }: IWalletProps) => {
     let coinName
     switch (wid) {
       case 'usdt':
-        coinName = 'USDT-TRC20'
+        coinName = q != 'cor/usdte'? 'USDT-TRC20' : 'USDT-ERC20';
         break
+
       case 'eth':
         coinName = 'Ethereum'
         break
@@ -107,8 +108,8 @@ const Wallet = ({ }: IWalletProps) => {
       case 'ltc':
         coinName = 'Litecoin'
         break
-      case 'xrp':
-        coinName = 'Ripple'
+      case 'dai':
+        coinName = 'DAI'
         break
       case 'bch':
         coinName = 'Bitcoin Cash'
@@ -117,13 +118,13 @@ const Wallet = ({ }: IWalletProps) => {
         coinName = 'Tron'
         break
       case 'bnb':
-        coinName = 'Binance'
+        coinName = 'BNB-BSC'
         break
       case 'sol':
         coinName = 'Solana'
         break
-      case 'dash':
-        coinName = 'DASH'
+      case 'ada':
+        coinName = 'Cardano'
         break
       case 'usdc':
         coinName = 'USDC-ERC20'

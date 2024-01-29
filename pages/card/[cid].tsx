@@ -484,7 +484,7 @@ const Cards = (props: ICardsProps) => {
               fullWidth
               type="submit"
             >
-              Submit for trade
+              Start Trade
             </Button>
           </div>
         </div>

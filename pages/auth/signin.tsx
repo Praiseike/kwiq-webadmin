@@ -21,7 +21,7 @@ import tw from 'twin.macro'
 
 import { Alert } from '@mantine/core'
 
-import { getSession, signIn, useSession } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
 import { MdError } from 'react-icons/md'
 import LottieWrapper from '../../components/LottieAnimation'
 import { isMobile, deviceType, deviceDetect } from 'react-device-detect';
@@ -29,9 +29,10 @@ import { isMobile, deviceType, deviceDetect } from 'react-device-detect';
 
 interface SignInProps {
   ipAddress: string;
+  userAgent: string;
 }
 
-const SignIn = ({ipAddress}: SignInProps) => {
+const SignIn = ({ipAddress, userAgent}: SignInProps) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -53,7 +54,7 @@ const SignIn = ({ipAddress}: SignInProps) => {
   const deviceInfo = {
     isMobile,
     deviceType,
-    ...deviceDetect(undefined),
+    ...deviceDetect(userAgent),
   };
 
 
@@ -155,9 +156,9 @@ const SignIn = ({ipAddress}: SignInProps) => {
 
           <Button
             loading={loading}
-            tw="bg-primary mt-32"
+            tw="bg-primary mt-6"
             size="lg"
-            mt="xl"
+            // mt="xl"
             fullWidth
             type="submit"
           >
@@ -187,8 +188,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context)
 
   const ipAddress = context.req.headers['x-real-ip'] || context.req.connection.remoteAddress;
-  
-  if (session) {
+  const userAgent = context.req.headers['user-agent'];
+
+  if (session) { 
     return {
       redirect: {
         destination: '/',
@@ -198,7 +200,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
   return {
     props: {
-      ipAddress      
+      ipAddress,
+      userAgent   
     },
   }
 }

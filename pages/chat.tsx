@@ -152,6 +152,10 @@ const Chat = (props: IChatProps) => {
     return <LoadingScreen />
   }
 
+  const capitalizeFirstLetter = (sentence: string) => {
+    return sentence.replace(/(^\s*\w|[\.\!\?]\s*\w)/g, match => match.toUpperCase());
+  }
+  
   return (
     <div>
       <Modal opened={opened} onClose={() => setOpened(false)} centered>
@@ -203,13 +207,13 @@ const Chat = (props: IChatProps) => {
                               width="80"
                               alt="trade image thumb"
                               onClick={() => {
-                                setOpened(true), setModalImage(message.message)
+                                setOpened(true), setModalImage( message.message)
                               }}
                             />
                           </div>
                         ) : (
                           <p tw="px-6 py-2 text-white bg-primary max-w-xs rounded-3xl">
-                            {message.message}
+                            {capitalizeFirstLetter(message.message)}
                           </p>
                         )}
                       </div>

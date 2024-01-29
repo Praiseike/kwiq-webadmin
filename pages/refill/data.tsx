@@ -249,6 +249,7 @@ const Data = ({ }: AirtimeProps) => {
 
         <TextInput
           required
+          inputMode='numeric'
           placeholder="Phone number"
           {...form.getInputProps('phone')}
           onBlur={() => form.validateField('phone')}
