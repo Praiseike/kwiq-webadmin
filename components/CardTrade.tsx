@@ -280,15 +280,8 @@ const Cards = ({ card }: ICardsProps) => {
           const success = await SendMessages()
 
           if (success) {
-            /*  successNotification({
-              message: 'Gift card(s) uploaded succesfully',
-            })
-            
-            setTimeout(() => {
-              setSuccess(true)
-            }, 3000) */
 
-            setTradeText('Starting trade ...')
+            setTradeText('Starting Trade...')
 
             router.push('/chat');
             

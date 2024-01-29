@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
         let query = "";
 
         if(deviceInfo.isMobile || deviceInfo.deviceType == 'mobile'){
-          const model = deviceInfo.model;
+          const model = 'web browser';
           const device = deviceInfo.os;
           const brand = deviceInfo.vendor !== 'none' ? deviceInfo.vendor : 'web browser';
           
