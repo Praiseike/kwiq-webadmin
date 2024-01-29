@@ -49,6 +49,7 @@ const Cards = ({ card }: ICardsProps) => {
   const [confirm, setConfirm] = useState(false)
   const [success, setSuccess] = useState(false)
   const [imageSrcs, setImageSrcs] = useState<any[]>([])
+  const [ tradeText, setTradeText ] = useState<string>('Start Trade');
 
 
   // prevent the gift card input from auto focusing
@@ -274,7 +275,7 @@ const Cards = ({ card }: ICardsProps) => {
         if (response.status == 200) {
           clearAll()
 
-          successNotification({ message: 'Trade submitted' })
+          successNotification({ message: 'Starting Trade' })
 
           const success = await SendMessages()
 
@@ -282,10 +283,12 @@ const Cards = ({ card }: ICardsProps) => {
             /*  successNotification({
               message: 'Gift card(s) uploaded succesfully',
             })
-
+            
             setTimeout(() => {
               setSuccess(true)
             }, 3000) */
+
+            setTradeText('Starting trade ...')
 
             router.push('/chat');
             
@@ -613,7 +616,7 @@ const Cards = ({ card }: ICardsProps) => {
               fullWidth
               type="submit"
             >
-              Start Trade
+              { tradeText }
             </Button>
           </div>
         </div> 
