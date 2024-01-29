@@ -327,7 +327,7 @@ const Index = ({pageStates}: {pageStates: any}) => {
                   {
                     pageStates?.btc_page ? 
                       "Sell Bitcoins, USDT, ETH Instantly"
-                    : "unavailable"
+                    : "Service is currently unavailable"
                   }
               </Text>
             </div>
@@ -346,7 +346,7 @@ const Index = ({pageStates}: {pageStates: any}) => {
                   {
                     pageStates?.giftcard_page ? 
                       "Sell your Gift Card Instantly"
-                    : "unavailable"
+                    : "Service is currently unavailable"
                   }
                 </Text>
             </div>
