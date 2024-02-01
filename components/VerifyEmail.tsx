@@ -73,10 +73,10 @@ export default function Verify({
             formValues.referal.length > 0 ? formValues.referal : 'rrxxy',
         })
         if (response.status == 200) {
-          // setLoading(false)
+          setLoading(false)
           successNotification({ message: 'Registered succesfully' })
           setStateMessage('Redirecting...');
-
+          router.push('/');
           //sign in quielty
           const res = await signIn('credentials', {
             userId: formValues.email,
@@ -84,9 +84,6 @@ export default function Verify({
             // callbackUrl: `${window.location.origin}/`,
             redirect: false, //no redirect as we still want to add an account
           })
-
-          // router.push('/');
-
         }
       } catch (e: any) {
         setLoading(false)
@@ -164,6 +161,7 @@ export default function Verify({
         <TextInput
           required
           type="number"
+          inputMode="numeric"
           placeholder="Verification code"
           {...formVerify.getInputProps('verificationcode')}
           onBlur={() => formVerify.validateField('verificationcode')}
