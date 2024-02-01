@@ -323,7 +323,7 @@ const Wallet = ({ }: IWalletProps) => {
               Only send <span tw="font-medium">{generateCoinName(wid)}</span> to
               this wallet address.<br/>
               { 
-                <span tw="text-red-600">min deposit: { `${getDepositAmount()} ${wid.toUpperCase()}` }</span>
+                <span tw="text-red-600">minimum deposit: { `${getDepositAmount()} ${wid?.toString().toUpperCase()}` }</span>
               }
             </p>
           </div>
