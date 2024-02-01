@@ -134,7 +134,7 @@ const SellCrypto = ({}: ISellCryptoProps) => {
                   />
                   <div tw="block">
                     <p tw="text-black1 font-medium">USDT</p>
-                    <p tw="text-black2 [font-size:10px]">Tether Wallet</p>
+                    <p tw="text-black2 [font-size:10px]">TRC-20 Wallet</p>
                   </div>
                 </div>
               </Link>

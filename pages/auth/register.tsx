@@ -90,7 +90,7 @@ const Register = ({}: RegisterProps) => {
         const response = await axios.post('/api/auth/send-verification-email', {
           email,
         })
-        console.log(response);
+        // console.log(response);
         if (response.status == 200) {
           successNotification({
             message: `Verification code sent to ${email} please check your inbox as code expires in 10 minutes`,
@@ -192,9 +192,9 @@ const Register = ({}: RegisterProps) => {
                 tw="bg-[#EEF8FF] text-[#279AED] normal-case font-normal px-2 py-3"
                 variant="filled"
               >
-                {stepAtom == 1 && 'Step 1 of 3'}
-                {stepAtom == 2 && 'Step 2 of 3'}
-                {stepAtom == 3 && 'Step 3 of 3'}
+                {stepAtom == 1 && 'Step 1 of 2'}
+                {stepAtom == 2 && 'Step 2 of 2'}
+                {/* {stepAtom == 3 && 'Step 3 of 3'} */}
               </Badge>
             }
           </div>
@@ -317,7 +317,7 @@ const Register = ({}: RegisterProps) => {
             <Verify form={form.values} verifyType="register" />
           </div>
         )}
-        {stepAtom == 3 && <AddBank mode="register" form={form.values} />}
+        {/* {stepAtom == 3 && <AddBank mode="register" form={form.values} />} */}
       </div>
 
       <style global jsx>

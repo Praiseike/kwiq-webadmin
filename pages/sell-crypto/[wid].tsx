@@ -95,7 +95,6 @@ const Wallet = ({ }: IWalletProps) => {
       case 'usdt':
         coinName = q != 'cor/usdte'? 'USDT-TRC20' : 'USDT-ERC20';
         break
-
       case 'eth':
         coinName = 'Ethereum'
         break
@@ -171,6 +170,36 @@ const Wallet = ({ }: IWalletProps) => {
   if (!data && !error) return <LoadingScreen />
   if (!data?.data?.walletAddress)
     return <ComingSoon message={wid?.toString()} />
+
+
+
+  const getDepositAmount = () => {
+      switch (wid) {
+        case 'usdt':
+          return (q != 'cor/usdte')? 2 : 5;
+        case 'eth':
+          return 0.01;
+        case 'btc':
+          return 0.0001;
+        case 'doge':
+          return 1;
+        case 'ltc':
+          return 0.01
+        case 'dai':
+          return 5
+        case 'bch':
+          return 0.001
+        case 'trx':
+          return 10
+        case 'bnb':
+          return 0.01
+        case 'ada':
+          return 2
+        case 'usdc':
+          return 5
+      }
+  }
+
 
   return (
     <>
@@ -293,9 +322,8 @@ const Wallet = ({ }: IWalletProps) => {
               {' '}
               Only send <span tw="font-medium">{generateCoinName(wid)}</span> to
               this wallet address.<br/>
-              { (wid == 'eth' || wid == 'btc') &&
-
-                <span tw="text-red-600">min deposit: { wid == 'eth'? 0.01 : 0.0005}</span>
+              { 
+                <span tw="text-red-600">min deposit: { getDepositAmount() }</span>
               }
             </p>
           </div>

@@ -22,6 +22,7 @@ import {
   successNotification,
   unsuccessfullNotification,
 } from '../libs/notifications'
+import { useRouter } from 'next/router'
 
 export interface VerifyProps {
   form: any
@@ -39,7 +40,11 @@ export default function Verify({
 
   const [loading, setLoading] = useState(false)
 
+  const [stateMessage, setStateMessage] = useState('Verify')
+
   const [, setStepAtom] = useAtom(atomStep)
+
+  const router = useRouter();
 
   const formVerify = useForm({
     initialValues: {
@@ -70,19 +75,19 @@ export default function Verify({
         if (response.status == 200) {
           setLoading(false)
           successNotification({ message: 'Registered succesfully' })
-
-          setStepAtom(3)
+          setStateMessage('Redirecting...');
+          router.push('/');
           //sign in quielty
           const res = await signIn('credentials', {
             userId: formValues.email,
             password: formValues.password,
-            //callbackUrl: `${window.location.origin}/`,
+            // callbackUrl: `${window.location.origin}/`,
             redirect: false, //no redirect as we still want to add an account
           })
         }
       } catch (e: any) {
         setLoading(false)
-        unsuccessfullNotification({message: e?.response.data.data.message })
+        unsuccessfullNotification({ message: e?.response.data.data.message })
       }
     }
 
@@ -105,7 +110,7 @@ export default function Verify({
         }
       } catch (e: any) {
         setLoading(false)
-        unsuccessfullNotification({message: e?.response.data.data.message })
+        unsuccessfullNotification({ message: e?.response.data.data.message })
       }
     }
   }
@@ -120,7 +125,7 @@ export default function Verify({
           successNotification({ message: response.data.data.message })
         }
       } catch (e: any) {
-        unsuccessfullNotification({message: e?.response.data.data.message })
+        unsuccessfullNotification({ message: e?.response.data.data.message })
       }
     }
 
@@ -173,7 +178,7 @@ export default function Verify({
           fullWidth
           type="submit"
         >
-          Verify
+          {stateMessage}
         </Button>
         <div tw="flex items-center justify-between w-full">
           <Text css={[style.text.sm]} tw="text-gray2">
