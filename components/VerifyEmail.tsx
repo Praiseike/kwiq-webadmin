@@ -76,7 +76,6 @@ export default function Verify({
           setLoading(false)
           successNotification({ message: 'Registered succesfully' })
           setStateMessage('Redirecting...');
-          router.push('/');
           //sign in quielty
           const res = await signIn('credentials', {
             userId: formValues.email,
@@ -84,6 +83,7 @@ export default function Verify({
             // callbackUrl: `${window.location.origin}/`,
             redirect: false, //no redirect as we still want to add an account
           })
+          router.push('/');
         }
       } catch (e: any) {
         setLoading(false)
